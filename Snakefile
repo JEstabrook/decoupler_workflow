@@ -5,19 +5,20 @@ import os
 from itertools import compress
 from enricher.enrich import *
 
-meta = pd.read_table('./input_data/KnockTF_joined_meta.tsv',index_col=0)
+meta = pd.read_table('./input_data/decoupler_L1000_meta.tsv').dropna()
 
 TARGET = meta.target.tolist()
-CELL_LINE = meta.cell.tolist()
-KD = meta.knockdown_method.tolist()
+CELL_LINE = meta.cell_id.tolist()
+KD = meta.pert_id.tolist()
+TIME = meta.pert_time.tolist()
 
-regulators = ['STAT2','NR2C2','GATA1','U2AF2','NFATC1','CITED2','RELA','NFE2L1','SETDB1','MXI1','BCLAF1','E2F6','MAFK','MITF','SP2','STAT5A','TFDP1','MAFG','RCOR1','SNW1','NRF1','NR4A1','HSF1','USF1','CEBPZ','ERF','CTCF','MAX','NFYB','HMGN3','E2F4','HDAC8','SP1','BHLHE40','ZBTB33','BRCA1','TRIM28','ZNF143','HMGA1','USF2','GTF2F1','JUND','SMAD5','TAL1','KAT2B','TBL1XR1','STAT6','ATF3','MAZ','SRF','LMNA','PCBP1','NFE2L2','RFX5','SIX5','NR2F2','GATA2','RAD21','FOXM1','CTBP1','STAT1','POLR2G','CHD2','SMARCA4']
+regulators = ["ERBB2","MAP2K1","PIK3CG","EGFR","BCR","ERBB4","CDK1","PIK3CA","MET","CDK9","BRAF","SRC","PLK1","CDK6","AKT1","PTK2","PDGFRB","YES1","MTOR","AURKB","PRKCB","PDGFRA","PIM1","TEK","CAMK2G","AURKA","MAPK12","TYRO3","RET","PARP1","BCL2L2","HDAC6","HDAC1","BRD3","HDAC4","PTGS2","DNMT1","MAPK14","TGFB1","ALK","IKBKB","TOP2A","MAPK7","GSK3B","MAP2K5","AKT2","KIT","CSF1R","MAPK3","CDK7","FGFR4","ATM","SIRT1","HDAC3","EHMT2","HDAC2","MAOB","ATR","PRKDC","CHEK2","RPS6KA3","RAF1","TTK","MAPK11","MAPK8","JAK2","AXL","MDM2","JAK3"]
 idx = [True if x in regulators else False for x in TARGET]
-
 
 TARGET = list(compress(TARGET,idx))
 CELL_LINE = list(compress(CELL_LINE,idx))
 KD = list(compress(KD,idx))
+TIME = list(compress(TIME,idx))
 
 with open('cluster.json') as json_file:
     json_dict = json.load(json_file)
@@ -35,12 +36,12 @@ def message(mes):
 
 rule all:
     input:
-        expand("decoupler_workflow/results/{kd}/{cell}/decoupler_subset_results.rds", zip, kd=KD,cell=CELL_LINE),
-        expand("decoupler_workflow/w_kd_plots/{kd}_{cell}_supplemental_figure2.pdf", zip, kd=KD,cell=CELL_LINE),
-        expand("decoupler_workflow/w_kd_plots/{kd}_{cell}_supplemental_figure3.pdf", zip, kd=KD,cell=CELL_LINE),
-        expand("decoupler_workflow/kd_agnostic_results/{cell}/decoupler_subset_results.rds", cell=set(CELL_LINE)),
-        expand("decoupler_workflow/wo_kd_plots/{cell}_supplemental_figure2.pdf",cell=set(CELL_LINE)),
-        expand("decoupler_workflow/wo_kd_plots/{cell}_supplemental_figure3.pdf",cell=set(CELL_LINE))
+        expand("decoupler_workflow/results/{kd}/{time}/{cell}/decoupler_subset_results.rds", zip, kd=KD,time=TIME,cell=CELL_LINE),
+        expand("decoupler_workflow/w_kd_plots/{kd}_{time}_{cell}_supplemental_figure2.pdf", zip, kd=KD,time=TIME,cell=CELL_LINE),
+        expand("decoupler_workflow/w_kd_plots/{kd}_{time}_{cell}_supplemental_figure3.pdf", zip, kd=KD,time=TIME,cell=CELL_LINE),
+    #    expand("decoupler_workflow/kd_agnostic_results/{time}/{cell}/decoupler_subset_results.rds", zip, time=TIME,cell=CELL_LINE),
+    #    expand("decoupler_workflow/wo_kd_plots/{time}_{cell}_supplemental_figure2.pdf", zip, time=TIME,cell=CELL_LINE),
+    #    expand("decoupler_workflow/wo_kd_plots/{time}_{cell}_supplemental_figure3.pdf", zip, time=TIME,cell=CELL_LINE)
 
 
 include: "rules/validation.smk"
