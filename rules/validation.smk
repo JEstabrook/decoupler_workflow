@@ -3,7 +3,7 @@ rule decoupler_w_kd:
     input:
         expr="input_data/L1000_formatted_expression_matrix.rds",
         meta="input_data/decoupler_L1000_meta.rds",
-        network="input_data/KnockTF_intersected_regulon.rds"
+        network="input_data/PC_tibble_network.rds"
     params:
         kd = lambda wildcards: "{}".format(wildcards.kd),
         cell = lambda wildcards: "{}".format(wildcards.cell),
@@ -26,7 +26,7 @@ rule decoupler_wo_kd:
     input:
         expr="input_data/L1000_formatted_expression_matrix.rds",
         meta="input_data/decoupler_L1000_meta.rds",
-        network="input_data/KnockTF_intersected_regulon.rds"
+        network="input_data/PC_tibble_network.rds"
     params:
         cell = lambda wildcards: "{}".format(wildcards.cell),
         time = lambda wildcards: "{}".format(wildcards.time)

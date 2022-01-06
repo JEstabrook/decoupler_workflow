@@ -19,10 +19,10 @@ expr <- readRDS(expr_fname)
 meta <- readRDS(meta_fname)
 network <- readRDS(netw_fname)
 
-regulators <-c("ERBB2","MAP2K1","PIK3CG","EGFR","BCR","ERBB4","CDK1","PIK3CA","MET","CDK9","BRAF","SRC","PLK1","CDK6","AKT1","PTK2","PDGFRB","YES1","MTOR","AURKB","PRKCB","PDGFRA","PIM1","TEK","CAMK2G","AURKA","MAPK12","TYRO3","RET","PARP1","BCL2L2","HDAC6","HDAC1","BRD3","HDAC4","PTGS2","DNMT1","MAPK14","TGFB1","ALK","IKBKB","TOP2A","MAPK7","GSK3B","MAP2K5","AKT2","KIT","CSF1R","MAPK3","CDK7","FGFR4","ATM","SIRT1","HDAC3","EHMT2","HDAC2","MAOB","ATR","PRKDC","CHEK2","RPS6KA3","RAF1","TTK","MAPK11","MAPK8","JAK2","AXL","MDM2","JAK3")
+regulators <- c("ERBB2","MAP2K1","EGFR","BCR","ERBB4","CDK1","PIK3CA","MET","CDK9","BRAF","SRC","PLK1","CDK6","AKT1","PTK2","YES1","MTOR","PRKCB","PIM1","TEK","MAPK12","PARP1","HDAC6","HDAC1","HDAC4","PTGS2","DNMT1","MAPK14","TGFB1","ALK","IKBKB","TOP2A","MAPK7","GSK3B","MAP2K5","AKT2","KIT","CSF1R","MAPK3","CDK7","ATM","SIRT1","HDAC3","EHMT2","HDAC2","ATR","PRKDC","CHEK2","RPS6KA3","RAF1","MAPK11","MAPK8","JAK2","MDM2","JAK3")
 
-sub_meta <- meta[(meta$cell_id == eval(celltype)) & (meta$target %in% regulators) & (meta$pert_time == eval(pert_time)),]
-control_meta <- meta[(meta$pert_id == 'DMSO') & (meta$cell_id == eval(celltype)) & (meta$pert_time == eval(pert_time)),]
+sub_meta <- meta[(meta$cell == eval(celltype)) & (meta$target %in% regulators) & (meta$pert_time == eval(pert_time)),]
+control_meta <- meta[(meta$pert_id == 'DMSO') & (meta$cell == eval(celltype)) & (meta$pert_time == eval(pert_time)),]
 sub_control <- control_meta[control_meta$det_plate %in% sub_meta$det_plate,]
 joined_meta <- bind_rows(sub_meta,sub_control)
 
