@@ -11,14 +11,16 @@ TARGET = meta.target.tolist()
 CELL_LINE = meta.cell_id.tolist()
 KD = meta.pert_id.tolist()
 TIME = meta.pert_time.tolist()
+DOSE = meta.pert_dose.tolist()
 
-regulators = ["ERBB2","MAP2K1","PIK3CG","EGFR","BCR","ERBB4","CDK1","PIK3CA","MET","CDK9","BRAF","SRC","PLK1","CDK6","AKT1","PTK2","PDGFRB","YES1","MTOR","AURKB","PRKCB","PDGFRA","PIM1","TEK","CAMK2G","AURKA","MAPK12","TYRO3","RET","PARP1","BCL2L2","HDAC6","HDAC1","BRD3","HDAC4","PTGS2","DNMT1","MAPK14","TGFB1","ALK","IKBKB","TOP2A","MAPK7","GSK3B","MAP2K5","AKT2","KIT","CSF1R","MAPK3","CDK7","FGFR4","ATM","SIRT1","HDAC3","EHMT2","HDAC2","MAOB","ATR","PRKDC","CHEK2","RPS6KA3","RAF1","TTK","MAPK11","MAPK8","JAK2","AXL","MDM2","JAK3"]
+regulators = ["ERBB2","MAP2K1","EGFR","BCR","ERBB4","CDK1","PIK3CA","MET","CDK9","BRAF","SRC","PLK1","CDK6","AKT1","PTK2","YES1","MTOR","PRKCB","PIM1","TEK","MAPK12","PARP1","HDAC6","HDAC1","HDAC4","PTGS2","DNMT1","MAPK14","TGFB1","ALK","IKBKB","TOP2A","MAPK7","GSK3B","MAP2K5","AKT2","KIT","CSF1R","MAPK3","CDK7","ATM","SIRT1","HDAC3","EHMT2","HDAC2","ATR","PRKDC","CHEK2","RPS6KA3","RAF1","MAPK11","MAPK8","JAK2","MDM2","JAK3"]
 idx = [True if x in regulators else False for x in TARGET]
 
 TARGET = list(compress(TARGET,idx))
 CELL_LINE = list(compress(CELL_LINE,idx))
 KD = list(compress(KD,idx))
 TIME = list(compress(TIME,idx))
+DOSE = list(compress(DOSE,idx))
 
 with open('cluster.json') as json_file:
     json_dict = json.load(json_file)
@@ -39,9 +41,11 @@ rule all:
         expand("decoupler_workflow/results/{kd}/{time}/{cell}/decoupler_subset_results.rds", zip, kd=KD,time=TIME,cell=CELL_LINE),
         expand("decoupler_workflow/w_kd_plots/{kd}_{time}_{cell}_supplemental_figure2.pdf", zip, kd=KD,time=TIME,cell=CELL_LINE),
         expand("decoupler_workflow/w_kd_plots/{kd}_{time}_{cell}_supplemental_figure3.pdf", zip, kd=KD,time=TIME,cell=CELL_LINE),
-    #    expand("decoupler_workflow/kd_agnostic_results/{time}/{cell}/decoupler_subset_results.rds", zip, time=TIME,cell=CELL_LINE),
-    #    expand("decoupler_workflow/wo_kd_plots/{time}_{cell}_supplemental_figure2.pdf", zip, time=TIME,cell=CELL_LINE),
-    #    expand("decoupler_workflow/wo_kd_plots/{time}_{cell}_supplemental_figure3.pdf", zip, time=TIME,cell=CELL_LINE)
-
+        expand("decoupler_workflow/kd_agnostic_results/{time}/{cell}/decoupler_subset_results.rds", zip, time=TIME,cell=CELL_LINE),
+        expand("decoupler_workflow/wo_kd_plots/{time}_{cell}_supplemental_figure2.pdf", zip, time=TIME,cell=CELL_LINE),
+        expand("decoupler_workflow/wo_kd_plots/{time}_{cell}_supplemental_figure3.pdf", zip, time=TIME,cell=CELL_LINE),
+        expand("decoupler_workflow/results_dose/{kd}_{dose}/{time}/{cell}/decoupler_subset_results.rds", zip, kd=KD,dose=DOSE,time=TIME,cell=CELL_LINE),
+        expand("decoupler_workflow/w_kd_dose_plots/{kd}_{dose}_{time}_{cell}_supplemental_figure2.pdf", zip, kd=KD,dose=DOSE,time=TIME,cell=CELL_LINE),
+        expand("decoupler_workflow/w_kd_dose_plots/{kd}_{dose}_{time}_{cell}_supplemental_figure3.pdf", zip, kd=KD,dose=DOSE,time=TIME,cell=CELL_LINE)
 
 include: "rules/validation.smk"

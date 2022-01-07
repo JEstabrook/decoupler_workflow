@@ -13,7 +13,7 @@ results_out = args[5]
 temp_expr = args[6]
 temp_meta = args[7]
 temp_netw = args[8]
-pert_time = args[9]
+pert_time = as.double(args[9])
 
 expr <- readRDS(expr_fname)
 meta <- readRDS(meta_fname)
@@ -23,8 +23,10 @@ regulators <- c("ERBB2","MAP2K1","EGFR","BCR","ERBB4","CDK1","PIK3CA","MET","CDK
 
 sub_meta <- meta[(meta$cell == eval(celltype)) & (meta$target %in% regulators) & (meta$pert_time == eval(pert_time)),]
 control_meta <- meta[(meta$pert_id == 'DMSO') & (meta$cell == eval(celltype)) & (meta$pert_time == eval(pert_time)),]
-sub_control <- control_meta[control_meta$det_plate %in% sub_meta$det_plate,]
-joined_meta <- bind_rows(sub_meta,sub_control)
+reg_fill <- sample(regulators,size=dim(control_meta)[[1]],replace=T)
+control_meta$target <- reg_fill
+
+joined_meta <- bind_rows(sub_meta, control_meta)
 
 sub_expr <- expr[,joined_meta$id]
 sub_netw <- network[network$tf %in% regulators,]
