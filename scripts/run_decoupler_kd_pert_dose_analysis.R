@@ -27,10 +27,10 @@ print(celltype)
 print(pert_time)
 print(sum(meta$target %in% regulators))
 print(head(meta$target))
-sub_meta <- meta[(meta$pert_id == eval(knock_down)) & (meta$cell == eval(celltype)) & (meta$target %in% regulators) & (meta$pert_time == eval(pert_time) & (meta$pert_dose == eval(pert_dose),]
+sub_meta <- meta[(meta$pert_id == eval(knock_down)) & (meta$cell == eval(celltype)) & (meta$target %in% regulators) & (meta$pert_time == eval(pert_time)) & (meta$pert_dose == eval(pert_dose)),]
 print(dim(sub_meta))
 
-control_meta <- meta[(meta$pert_id == 'DMSO') & (meta$cell == eval(celltype)) & (meta$pert_time == eval(pert_time)) & (meta$pert_dose == eval(pert_dose),]
+control_meta <- meta[(meta$pert_id == 'DMSO') & (meta$cell == eval(celltype)) & (meta$pert_time == eval(pert_time)) & (meta$pert_dose == eval(pert_dose)),]
 sub_control <- control_meta[control_meta$det_plate %in% sub_meta$det_plate,]
 
 off_targ <- regulators[!regulators %in% unique(sub_meta$target)][[1]]
