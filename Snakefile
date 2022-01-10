@@ -21,6 +21,8 @@ CELL_LINE = list(compress(CELL_LINE,idx))
 KD = list(compress(KD,idx))
 TIME = list(compress(TIME,idx))
 DOSE = list(compress(DOSE,idx))
+DOSE = np.round(DOSE,2)
+print(DOSE)
 
 with open('cluster.json') as json_file:
     json_dict = json.load(json_file)

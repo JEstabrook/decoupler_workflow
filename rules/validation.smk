@@ -129,8 +129,8 @@ rule generate_supple_fig_3_w_kd_dose:
     input:
         results = "decoupler_workflow/results_dose/{kd}_{dose}/{time}/{cell}/decoupler_subset_results.rds"
     output:
-        fig = "decoupler_workflow/w_kd_plots_dose/{kd}_{dose}_{time}_{cell}_supplemental_figure3.pdf",
-        csv_out = "decoupler_workflow/w_kd_plots_dose/{kd}_{dose}_{time}_{cell}_supplemental_table.csv"
+        fig = "decoupler_workflow/w_kd_dose_plots/{kd}_{dose}_{time}_{cell}_supplemental_figure3.pdf",
+        csv_out = "decoupler_workflow/w_kd_dose_plots/{kd}_{dose}_{time}_{cell}_supplemental_table.csv"
     shell:
         """
         mkdir -p decoupler_workflow/w_kd_plots_dose

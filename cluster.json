@@ -19,6 +19,15 @@
         "t" : "36:00:00",
         "mem" : 50000
     },
+    "decoupler_w_kd_pert_dose" :
+    {
+        "J" : "decoupler_w_kd_pert_dose",
+        "e" : "logs/{rule}/{wildcards.kd}_{wildcards.dose}_{wildcards.cell}_%j.err",
+        "o" : "logs/{rule}/{wildcards.kd}_{wildcards.dose}_{wildcards.cell}_%j.out",
+        "c" : 4,
+        "t" : "6:00:00",
+        "mem" : 10000
+    },
     "decoupler_wo_kd" :
     {
         "J" : "decoupler_wo_kd",
