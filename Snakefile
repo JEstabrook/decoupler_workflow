@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd 
 import json
 import os
-from itertools import compress
+from itertools import compress,cycle
 from enricher.enrich import *
 
 meta = pd.read_table('./input_data/KnockTF_joined_meta.tsv',index_col=0)
@@ -32,6 +32,15 @@ for rule in rule_dirs:
 def message(mes):
     sys.stderr.write("|--- " + mes + "\n")
 
+CONTROL_COND = ['kdallcontrol', 'kdonlycontrol']
+no_kd_control =  ['nokdallcontrol', 'nokdonlycontrol']
+DOWNSAMPLE = ['TRUE', 'FALSE']
+zip_list = zip(CELL_LINE, KD, cycle(DOWNSAMPLE),cycle(CONTROL_COND))
+cell,kd,down,control = list(zip(*zip_list))
+
+zip_list = zip(CELL_LINE, KD, cycle(DOWNSAMPLE),cycle(no_kd_control))
+_,_,_,nokdcontrol = list(zip(*zip_list))
+
 
 rule all:
     input:
@@ -40,7 +49,23 @@ rule all:
         expand("decoupler_workflow/w_kd_plots/{kd}_{cell}_supplemental_figure3.pdf", zip, kd=KD,cell=CELL_LINE),
         expand("decoupler_workflow/kd_agnostic_results/{cell}/decoupler_subset_results.rds", cell=set(CELL_LINE)),
         expand("decoupler_workflow/wo_kd_plots/{cell}_supplemental_figure2.pdf",cell=set(CELL_LINE)),
-        expand("decoupler_workflow/wo_kd_plots/{cell}_supplemental_figure3.pdf",cell=set(CELL_LINE))
+        expand("decoupler_workflow/wo_kd_plots/{cell}_supplemental_figure3.pdf",cell=set(CELL_LINE)),
+        expand("decoupler_workflow/downsample/kdallcontrol_{downsample}_{kd}_{cell}_decoupler_subset_results.rds", zip, kd=KD, cell=CELL_LINE, downsample=down),
+        expand("decoupler_workflow/downsample/kdonlycontrol_{downsample}_{kd}_{cell}_decoupler_subset_results.rds", zip, kd=KD, cell=CELL_LINE, downsample=down),
+        expand("decoupler_workflow/downsample/nokdallcontrol_{downsample}_{cell}_decoupler_subset_results.rds", zip, cell=CELL_LINE, downsample=down),
+        expand("decoupler_workflow/downsample/nokdonlycontrol_{downsample}_{cell}_decoupler_subset_results.rds", zip, cell=CELL_LINE, downsample=down),
+        expand("decoupler_workflow/downsample/w_kd_plots/kdallcontrol_{downsample}_{kd}_{cell}_supplemental_figure2.pdf",zip, kd=KD,cell=CELL_LINE, downsample=down),
+        expand("decoupler_workflow/downsample/w_kd_plots/kdonlycontrol_{downsample}_{kd}_{cell}_supplemental_figure2.pdf",zip, kd=KD,cell=CELL_LINE, downsample=down),
+        expand("decoupler_workflow/downsample/wo_kd_plots/nokdallcontrol_{downsample}_{cell}_supplemental_figure2.pdf",zip, cell=CELL_LINE, downsample=down),
+        expand("decoupler_workflow/downsample/wo_kd_plots/nokdonlycontrol_{downsample}_{cell}_supplemental_figure2.pdf",zip, cell=CELL_LINE, downsample=down),
+        expand("decoupler_workflow/downsample/w_kd_plots/kdallcontrol_TRUE_{kd}_{cell}_supplemental_figure3.pdf",zip, kd=KD,cell=CELL_LINE),
+        expand("decoupler_workflow/downsample/w_kd_plots/kdonlycontrol_TRUE_{kd}_{cell}_supplemental_figure3.pdf",zip, kd=KD,cell=CELL_LINE),
+        expand("decoupler_workflow/downsample/wo_kd_plots/nokdallcontrol_TRUE_{cell}_supplemental_figure3.pdf",zip, cell=CELL_LINE),
+        expand("decoupler_workflow/downsample/wo_kd_plots/nokdonlycontrol_TRUE_{cell}_supplemental_figure3.pdf",zip, cell=CELL_LINE),
+        expand("decoupler_workflow/wo_kd_plots/{cell}_base_plot_PR_HEAT.pdf",zip, cell=CELL_LINE),
+        expand("decoupler_workflow/w_kd_plots/{kd}_{cell}_base_plot_PR_HEAT.pdf",zip, kd=KD, cell=CELL_LINE),
+        expand("decoupler_workflow/nokddownsample/baseplots/{nokdcontrol}__{downsample}_{cell}_base_plot_PR_HEAT.pdf",zip, nokdcontrol=nokdcontrol, downsample=down, cell=cell),
+        expand("decoupler_workflow/wkddownsample/baseplots/{control}_{kd}_{downsample}_{cell}_base_plot_PR_HEAT.pdf",zip, control=control, kd=KD, downsample=down, cell=cell)
 
 
 include: "rules/validation.smk"

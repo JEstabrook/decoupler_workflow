@@ -66,7 +66,7 @@ design <- tibble(
 # Run benchmark
 result <- run_benchmark(
   .design = design, # provide input tibble
-  .minsize = 5, # filter gene sets with size < 10
+  .minsize = 10, # filter gene sets with size < 10
   .form = TRUE, # format the benchmark results
   .perform = TRUE, # evaluate benchmarking performance
   .silent = FALSE, # silently run the pipeline
