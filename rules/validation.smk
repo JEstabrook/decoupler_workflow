@@ -6,19 +6,19 @@ rule decoupler_w_kd:
         network="input_data/KnockTF_intersected_regulon.rds"
     params:
         kd = lambda wildcards: "{}".format(wildcards.kd),
-        cell = lambda wildcards: "{}".format(wildcards.cell)
+        cell = lambda wildcards: "{}".format(wildcards.cell),
+        component = lambda wildcards: "{}".format(wildcards.component)
     output:
-        temp_expr=temp("decoupler_workflow/results/{kd}/{cell}/decoupler_subset_expr.rds"),
-        temp_meta=temp("decoupler_workflow/results/{kd}/{cell}/decoupler_subset_meta.rds"),
-        temp_netw=temp("decoupler_workflow/results/{kd}/{cell}/decoupler_subset_network.rds"),
-        results_out="decoupler_workflow/results/{kd}/{cell}/decoupler_subset_results.rds" 
+        temp_expr=temp("decoupler_workflow/results/{component}/{kd}/{cell}/decoupler_subset_expr.rds"),
+        temp_meta=temp("decoupler_workflow/results/{component}/{kd}/{cell}/decoupler_subset_meta.rds"),
+        temp_netw=temp("decoupler_workflow/results/{component}/{kd}/{cell}/decoupler_subset_network.rds"),
+        results_out="decoupler_workflow/results/{component}/{kd}/{cell}/decoupler_subset_results.rds" 
+    singularity:
+        "library://jestabrook/regulon_enrichment/decoupler_env_slot_access"
     shell:
         """
-        mkdir -p decoupler_workflow/results/{params.kd}/{params.cell}
-        set +u
-        source deactivate
-        source activate decoupler_env
-        Rscript ./scripts/run_decoupler_kd_analysis.R {input.expr} {input.meta} {input.network} {params.kd} {params.cell} {output.results_out} {output.temp_expr} {output.temp_meta} {output.temp_netw}
+        mkdir -p decoupler_workflow/results/{params.component}/{params.kd}/{params.cell}
+        Rscript ./scripts/run_decoupler_kd_analysis.R {input.expr} {input.meta} {input.network} {params.kd} {params.cell} {output.results_out} {output.temp_expr} {output.temp_meta} {output.temp_netw} {params.component}
         """
 
 rule decoupler_wo_kd:
@@ -28,74 +28,78 @@ rule decoupler_wo_kd:
         network="input_data/KnockTF_intersected_regulon.rds"
     params:
         cell = lambda wildcards: "{}".format(wildcards.cell),
+        component = lambda wildcards: "{}".format(wildcards.component)
     output:
-        temp_expr=temp("decoupler_workflow/kd_agnostic_results/{cell}/decoupler_subset_expr.rds"),
-        temp_meta=temp("decoupler_workflow/kd_agnostic_results/{cell}/decoupler_subset_meta.rds"),
-        temp_netw=temp("decoupler_workflow/kd_agnostic_results/{cell}/decoupler_subset_network.rds"),
-        results_out="decoupler_workflow/kd_agnostic_results/{cell}/decoupler_subset_results.rds"
+        temp_expr=temp("decoupler_workflow/kd_agnostic_results/{component}/{cell}/decoupler_subset_expr.rds"),
+        temp_meta=temp("decoupler_workflow/kd_agnostic_results/{component}/{cell}/decoupler_subset_meta.rds"),
+        temp_netw=temp("decoupler_workflow/kd_agnostic_results/{component}/{cell}/decoupler_subset_network.rds"),
+        results_out="decoupler_workflow/kd_agnostic_results/{component}/{cell}/decoupler_subset_results.rds"
+    singularity:
+        "library://jestabrook/regulon_enrichment/decoupler_env_slot_access"
     shell:
         """
         mkdir -p decoupler_workflow/kd_agnostic_results/{params.cell}
-        set +u
-        source deactivate
-        source activate decoupler_env
-        Rscript ./scripts/run_decoupler_wo_kd_analysis.R {input.expr} {input.meta} {input.network} {params.cell} {output.results_out} {output.temp_expr} {output.temp_meta} {output.temp_netw}
+        Rscript ./scripts/run_decoupler_wo_kd_analysis.R {input.expr} {input.meta} {input.network} {params.cell} {output.results_out} {output.temp_expr} {output.temp_meta} {output.temp_netw} {params.component}
         """
 
 rule generate_supple_fig_2_w_kd:
     input:
-        results = "decoupler_workflow/results/{kd}/{cell}/decoupler_subset_results.rds"
+        results = "decoupler_workflow/results/{component}/{kd}/{cell}/decoupler_subset_results.rds"
     output:
-        fig = "decoupler_workflow/w_kd_plots/{kd}_{cell}_supplemental_figure2.pdf"
+        fig = "decoupler_workflow/w_kd_plots/{component}/{kd}_{cell}_supplemental_figure2.pdf"
+    params:
+        component = lambda wildcards: "{}".format(wildcards.component)
+    singularity:
+        "library://jestabrook/regulon_enrichment/decoupler_env_slot_access"
     shell:
         """
-        mkdir -p decoupler_workflow/w_kd_plots
-        set +u
-        source deactivate
-        source activate decoupler_env
+        mkdir -p decoupler_workflow/w_kd_plots/{params.component}
         Rscript ./scripts/generate_heat_and_jaccard.R {input.results} {output.fig} 
         """
 
 rule generate_supple_fig_2_wo_kd:
     input:
-        results = "decoupler_workflow/kd_agnostic_results/{cell}/decoupler_subset_results.rds"
+        results = "decoupler_workflow/kd_agnostic_results/{component}/{cell}/decoupler_subset_results.rds"
     output:
-        fig = "decoupler_workflow/wo_kd_plots/{cell}_supplemental_figure2.pdf"
+        fig = "decoupler_workflow/wo_kd_plots/{component}/{cell}_supplemental_figure2.pdf"
+    params:
+        component = lambda wildcards: "{}".format(wildcards.component)
+    singularity:
+        "library://jestabrook/regulon_enrichment/decoupler_env_slot_access"
     shell:
         """
-        mkdir -p decoupler_workflow/wo_kd_plots
-        set +u
-        source deactivate
-        source activate decoupler_env
+        mkdir -p decoupler_workflow/wo_kd_plots/{params.component}
         Rscript ./scripts/generate_heat_and_jaccard.R {input.results} {output.fig} 
         """
 
 rule generate_supple_fig_3_w_kd:
     input:
-        results = "decoupler_workflow/results/{kd}/{cell}/decoupler_subset_results.rds"
+        results = "decoupler_workflow/results/{component}/{kd}/{cell}/decoupler_subset_results.rds"
     output:
-        fig = "decoupler_workflow/w_kd_plots/{kd}_{cell}_supplemental_figure3.pdf",
-        csv_out = "decoupler_workflow/w_kd_plots/{kd}_{cell}_supplemental_table.csv"
+        fig = "decoupler_workflow/w_kd_plots/{component}/{kd}_{cell}_supplemental_figure3.pdf",
+        csv_out = "decoupler_workflow/w_kd_plots/{component}/{kd}_{cell}_supplemental_table.csv"
+    params:
+        component = lambda wildcards: "{}".format(wildcards.component)
+    singularity:
+        "library://jestabrook/regulon_enrichment/decoupler_env_slot_access"
     shell:
         """
-        mkdir -p decoupler_workflow/w_kd_plots
-        set +u
-        source deactivate
-        source activate decoupler_env
+        mkdir -p decoupler_workflow/w_kd_plots/{params.component}
         Rscript ./scripts/generate_box_and_scatter.R {input.results} {output.fig} {output.csv_out}
         """
 
 rule generate_supple_fig_3_wo_kd:
     input:
-        results = "decoupler_workflow/kd_agnostic_results/{cell}/decoupler_subset_results.rds" 
+        results = "decoupler_workflow/kd_agnostic_results/{component}/{cell}/decoupler_subset_results.rds" 
     output:
-        fig = "decoupler_workflow/wo_kd_plots/{cell}_supplemental_figure3.pdf",
-        csv_out = "decoupler_workflow/wo_kd_plots/{cell}_supplemental_table.csv"
+        fig = "decoupler_workflow/wo_kd_plots/{component}/{cell}_supplemental_figure3.pdf",
+        csv_out = "decoupler_workflow/wo_kd_plots/{component}/{cell}_supplemental_table.csv"
+    params:
+        component = lambda wildcards: "{}".format(wildcards.component)
+    singularity:
+        "library://jestabrook/regulon_enrichment/decoupler_env_slot_access"
     shell:
         """
-        mkdir -p decoupler_workflow/wo_kd_plots
-        set +u
-        source deactivate
-        source activate decoupler_env
+        mkdir -p decoupler_workflow/wo_kd_plots/{params.component}
         Rscript ./scripts/generate_box_and_scatter.R {input.results} {output.fig} {output.csv_out}
         """

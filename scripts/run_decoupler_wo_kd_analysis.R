@@ -13,7 +13,7 @@ results_out = args[5]
 temp_expr = args[6]
 temp_meta = args[7]
 temp_netw = args[8]
-
+enrich_slot = args[9]
 
 expr <- readRDS(expr_fname)
 meta <- readRDS(meta_fname)
@@ -46,7 +46,7 @@ opts_list <- list(list(
   gsva = list(verbose = FALSE, method = "gsva"),
   ora = list(n_up=300, n_bottom=300, n_background=20000, with_ties = TRUE),
   fgsea = list(times=100, nproc=nproc, seed=seed),
-  enricher = list(scaler_type="robust", minsize=5)
+  enricher = list(scaler_type="robust", minsize=5, enr_type=enrich_slot)
 ))
 
 # Design
