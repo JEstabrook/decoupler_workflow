@@ -19,9 +19,42 @@ expr <- readRDS(expr_fname)
 meta <- readRDS(meta_fname)
 network <- readRDS(netw_fname)
 
-regulators <- c("STAT5A","BACH1", "PCBP1", "NR4A1", "FOXM1", "RCOR1", "GATA1","NFE2L1","MAZ", "HMGA1", "HDAC8", "STAT2", "E2F4","NFE2L2","POLR2G","SMARCA4","AGO1","KAT2B", "SMAD5", "NR2F2", "MITF","LMNA","TRIM28","E2F6","ATF3","MAFG","USF2","CEBPZ","CITED2","CTBP1", "NRF1","TBL1XR1","AGO2","GTF2F1","RELA","MAX", "NFYB","TFDP1", "JUND","STAT6", "STAT1", "SP1","NFATC1","SRF", "SNW1","ERF", "GATA2", "NFYA","BRCA1","HSF1","SRSF3")
+regulators<-c("ACTL6A","AHR","AR","ARNT","ATF2","ATF3","ATG5","ATM","ATR","BACH1","BRCA1","BRD4","CDX2","CHEK1","CREB1","EGR3","ELK1","EP300","EPAS1","EREG","ESR1","ESR2","ESRRA","ETS1","ETS2","ETV4","FOXA1","FOXM1","FOXO1","FOXO3","FOXP1","GATA2","GATA3","GATA6","GLI2","GTF3A","HES1","HIF1A","HMGA1","HNF1B","HOXA5","HSF1","HSF2","IRF2","IRF7","JUN","KLF4","LEF1","MAF","MITF","MSX1","MTF1","MYB","MYBL2","MYC","MYCN","NANOG","NFATC3","NFE2L2","NFKB1","NFKB2","NFYA","NFYC","NR2F2","NR3C1","PAX2","PAX3","PGR","PITX2","POSTN","POU5F1","PROX1","PTEN","RELA","RELB","REST","RUNX1","RUNX2","SF1","SMAD2","SMAD3","SMAD4","SNAI1","SOX2","SOX9","SP3","STAT1","STAT3","STAT5A","STAT6","TCF4","TCF7L1","TFAP2C","TFAP4","THRA","THRB","TP53","TP63","TWIST1","TYK2","XBP1","YY1","ZEB1","ZIC2")
 
-sub_meta <- meta[(meta$cell == eval(celltype)) & (meta$target %in% regulators),]
+sub_meta_ <- meta[(meta$cell == eval(celltype)) & (meta$target %in% regulators),]
+n_ <- dim(sub_meta_)[[1]]
+control_sub_meta <- meta[(meta$knockdown_method == "Control")& (meta$cell == eval(celltype)),]
+cn_ <- dim(control_sub_meta)[[1]]
+if(cn_ == 0){
+    control_sample_meta <- meta[(meta$knockdown_method == "Control"),]
+    sample_control <- control_sample_meta[sample(nrow(control_sample_meta),n_),]
+} else {
+    sample_control <- control_sub_meta}
+#    if(cn_ < n_){
+#        dif_n <- n_ - cn_
+#        control_sample_meta <- meta[(meta$knockdown_method == "Control"),]
+#        sub_sample_control <- control_sample_meta[sample(nrow(control_sample_meta),dif_n),]
+#        sample_control <- rbind(control_sub_meta,sub_sample_control)
+#    } else {
+#        sample_control <- control_sub_meta}
+#}
+
+n_targets <- length(unique(sub_meta_$target))
+if(n_targets == 1){
+    target <- unique(sub_meta_$target)
+    length.n <- dim(sample_control)[1]
+    sub_targs <- regulators[regulators != target]
+    control_targets <- rep(sub_targs,length.out=length.n)
+    sample_control$target <- control_targets
+} else {
+    length.n <- dim(sample_control)[1]
+    targets <- unique(sub_meta_$target)
+    sub_targs <- regulators[!(regulators %in% targets)]
+    control_targets <- rep(sub_targets,length.out=length.n)
+    sample_control$target <- control_targets
+}
+
+sub_meta <- rbind(sub_meta_,sample_control)
 sub_expr <- expr[,sub_meta$id]
 sub_netw <- network[network$tf %in% regulators,]
 

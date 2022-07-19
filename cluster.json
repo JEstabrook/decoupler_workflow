@@ -28,6 +28,42 @@
         "t" : "36:00:00",
         "mem" : 50000
     },
+    "decoupler_w_kd_mod" :
+    {
+        "J" : "decoupler_w_kd_mod",
+        "e" : "logs/{rule}/{wildcards.kd}_{wildcards.cell}_%j.err",
+        "o" : "logs/{rule}/{wildcards.kd}_{wildcards.cell}_%j.out",
+        "c" : 4,
+        "t" : "36:00:00",
+        "mem" : 50000
+    },
+    "decoupler_wo_kd_mod" :
+    {
+        "J" : "decoupler_wo_kd_mod",
+        "e" : "logs/{rule}/{wildcards.cell}_%j.err",
+        "o" : "logs/{rule}/{wildcards.cell}_%j.out",
+        "c" : 1,
+        "t" : "36:00:00",
+        "mem" : 50000
+    },
+    "decoupler_w_kd_mod_sign" :
+    {
+        "J" : "decoupler_w_kd_mod_sign",
+        "e" : "logs/{rule}/{wildcards.kd}_{wildcards.cell}_%j.err",
+        "o" : "logs/{rule}/{wildcards.kd}_{wildcards.cell}_%j.out",
+        "c" : 4,
+        "t" : "36:00:00",
+        "mem" : 50000
+    },
+    "decoupler_wo_kd_mod_sign" :
+    {
+        "J" : "decoupler_wo_kd_mod_sign",
+        "e" : "logs/{rule}/{wildcards.cell}_%j.err",
+        "o" : "logs/{rule}/{wildcards.cell}_%j.out",
+        "c" : 1,
+        "t" : "36:00:00",
+        "mem" : 50000
+    },
     "generate_supple_fig_2_w_kd" :
     {
         "J" : "generate_supple_fig_2_w_kd",
@@ -58,6 +94,78 @@
     "generate_supple_fig_3_wo_kd" :
     {
         "J" : "generate_supple_fig_3_wo_kd",
+        "e" : "logs/{rule}/{wildcards.cell}_%j.err",
+        "o" : "logs/{rule}/{wildcards.cell}_%j.out",
+        "c" : 1,
+        "t" : "6:00:00",
+        "mem" : 5000
+    },
+    "generate_supple_fig_2_w_kd_mod" :
+    {
+        "J" : "generate_supple_fig_2_w_kd_mod",
+        "e" : "logs/{rule}/{wildcards.kd}_{wildcards.cell}_%j.err",
+        "o" : "logs/{rule}/{wildcards.kd}_{wildcards.cell}_%j.out",
+        "c" : 1,
+        "t" : "6:00:00",
+        "mem" : 5000
+    },
+    "generate_supple_fig_2_wo_kd_mod" :
+    {
+        "J" : "generate_supple_fig_2_wo_kd_mod",
+        "e" : "logs/{rule}/{wildcards.cell}_%j.err",
+        "o" : "logs/{rule}/{wildcards.cell}_%j.out",
+        "c" : 1,
+        "t" : "6:00:00",
+        "mem" : 5000
+    },
+    "generate_supple_fig_3_w_kd_mod" :
+    {
+        "J" : "generate_supple_fig_3_w_kd_mod",
+        "e" : "logs/{rule}/{wildcards.kd}_{wildcards.cell}_%j.err",
+        "o" : "logs/{rule}/{wildcards.kd}_{wildcards.cell}_%j.out",
+        "c" : 1,
+        "t" : "6:00:00",
+        "mem" : 5000
+    },
+    "generate_supple_fig_3_wo_kd_mod" :
+    {
+        "J" : "generate_supple_fig_3_wo_kd_mod",
+        "e" : "logs/{rule}/{wildcards.cell}_%j.err",
+        "o" : "logs/{rule}/{wildcards.cell}_%j.out",
+        "c" : 1,
+        "t" : "6:00:00",
+        "mem" : 5000
+    },
+    "generate_supple_fig_2_w_kd_sign_mod" :
+    {
+        "J" : "generate_supple_fig_2_w_kd_sign_mod",
+        "e" : "logs/{rule}/{wildcards.kd}_{wildcards.cell}_%j.err",
+        "o" : "logs/{rule}/{wildcards.kd}_{wildcards.cell}_%j.out",
+        "c" : 1,
+        "t" : "6:00:00",
+        "mem" : 5000
+    },
+    "generate_supple_fig_2_wo_kd_sign_mod" :
+    {
+        "J" : "generate_supple_fig_2_wo_kd_sign_mod",
+        "e" : "logs/{rule}/{wildcards.cell}_%j.err",
+        "o" : "logs/{rule}/{wildcards.cell}_%j.out",
+        "c" : 1,
+        "t" : "6:00:00",
+        "mem" : 5000
+    },
+    "generate_supple_fig_3_w_kd_sign_mod" :
+    {
+        "J" : "generate_supple_fig_3_w_kd_sign_mod",
+        "e" : "logs/{rule}/{wildcards.kd}_{wildcards.cell}_%j.err",
+        "o" : "logs/{rule}/{wildcards.kd}_{wildcards.cell}_%j.out",
+        "c" : 1,
+        "t" : "6:00:00",
+        "mem" : 5000
+    },
+    "generate_supple_fig_3_wo_kd_sign_mod" :
+    {
+        "J" : "generate_supple_fig_3_wo_kd_sign_mod",
         "e" : "logs/{rule}/{wildcards.cell}_%j.err",
         "o" : "logs/{rule}/{wildcards.cell}_%j.out",
         "c" : 1,
