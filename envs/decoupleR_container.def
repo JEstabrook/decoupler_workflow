@@ -1,0 +1,74 @@
+Bootstrap: docker
+From: ubuntu:18.04
+
+%labels
+    Version v1.1.1
+
+%setup
+    # Download Joey's decoupler environment file
+    wget https://raw.githubusercontent.com/JEstabrook/decoupler_workflow/master/envs/decoupler_env.yaml
+
+%files
+    # Set decoupler environment file path
+    /decoupler_env.yaml
+
+%post
+    # Set up container
+    # Based on: https://stackoverflow.com/questions/54678805/containerize-a-conda-environment-in-a-singularity-container
+    apt-get update && apt-get -y upgrade
+    apt-get -y install \
+    build-essential \
+    wget \
+    bzip2 \
+    ca-certificates \
+    libglib2.0-0 \
+    libxext6 \
+    libsm6 \
+    libxrender1 \
+    git
+    rm -rf /var/lib/apt/lists/*
+    apt-get clean
+
+    # Install Miniconda3 
+    # Versions
+    wget -c https://repo.anaconda.com/miniconda/Miniconda3-4.7.12-Linux-x86_64.sh
+    /bin/bash Miniconda3-4.7.12-Linux-x86_64.sh -bfp /usr/local
+
+    # Source conda bash script
+    . /usr/local/etc/profile.d/conda.sh
+
+    # Add bioconda channels
+    conda config --add channels defaults
+    conda config --add channels conda-forge
+    conda config --add channels bioconda
+
+    # Set-up decoupler_env
+    conda create -n decoupler_env 
+    conda activate decoupler_env 
+    conda install -c bioconda bioconductor-decoupler
+    conda install -c conda-forge r-devtools
+    conda install -c conda-forge r-reticulate
+    conda install -c conda-forge r-doParallel
+    conda install -c conda-forge r-doRNG
+    conda install -c conda-forge r-doMC
+    conda install -c conda-forge r-ggrepel
+    conda install -c conda-forge r-patchwork
+    conda install -c conda-forge r-ggplotify
+
+
+    ## Install R packages
+      R -e 'devtools::install_github("saezlab/decoupleRBench")'
+      R -e 'devtools::install_github("JEstabrook/decoupleR", ref="upstream_fork")'
+      
+      conda deactivate
+
+    # Set-up regulon-enrichment environment
+    conda create -n enrich_env python=3.6.8
+    conda activate enrich_env 
+    conda install -c estabroj89 regulon-enrichment
+    conda deactivate
+
+    echo ". /usr/local/etc/profile.d/conda.sh" >> $SINGULARITY_ENVIRONMENT
+    echo "conda activate decoupler_env" >> $SINGULARITY_ENVIRONMENT
+
+
