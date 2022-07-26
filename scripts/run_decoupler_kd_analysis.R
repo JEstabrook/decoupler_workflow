@@ -54,7 +54,7 @@ if(n_targets == 1){
     length.n <- dim(sample_control)[1]
     targets <- unique(sub_meta_$target)
     sub_targs <- regulators[!(regulators %in% targets)]
-    control_targets <- rep(sub_targets,length.out=length.n)
+    control_targets <- rep(sub_targs,length.out=length.n)
     sample_control$target <- control_targets
 }
 sub_meta <- rbind(sub_meta_,sample_control)

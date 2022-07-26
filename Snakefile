@@ -48,20 +48,25 @@ rule all:
     input:
         expand("decoupler_workflow/results/{component}/{kd}/{cell}/decoupler_subset_results.rds", zip, kd=KD,cell=CELL_LINE, component=COMPONENTS),
         expand("decoupler_workflow/mod_results/{component}/{kd}/{cell}/decoupler_subset_results.rds", zip, kd=KD,cell=CELL_LINE, component=COMPONENTS),
-        expand("decoupler_workflow/w_kd_plots/{component}/{kd}_{cell}_supplemental_figure2.pdf", zip, kd=KD,cell=CELL_LINE, component=COMPONENTS),
-        expand("decoupler_workflow/w_kd_plots_mod/{component}/{kd}_{cell}_supplemental_figure2.pdf", zip, kd=KD,cell=CELL_LINE, component=COMPONENTS),
-        expand("decoupler_workflow/w_kd_plots/{component}/{kd}_{cell}_supplemental_figure3.pdf", zip, kd=KD,cell=CELL_LINE, component=COMPONENTS),
-        expand("decoupler_workflow/w_kd_plots_mod/{component}/{kd}_{cell}_supplemental_figure3.pdf", zip, kd=KD,cell=CELL_LINE, component=COMPONENTS),
+        #expand("decoupler_workflow/w_kd_plots/{component}/{kd}_{cell}_supplemental_figure2.pdf", zip, kd=KD,cell=CELL_LINE, component=COMPONENTS),
+        #expand("decoupler_workflow/w_kd_plots_mod/{component}/{kd}_{cell}_supplemental_figure2.pdf", zip, kd=KD,cell=CELL_LINE, component=COMPONENTS),
+        #expand("decoupler_workflow/w_kd_plots/{component}/{kd}_{cell}_supplemental_figure3.pdf", zip, kd=KD,cell=CELL_LINE, component=COMPONENTS),
+        #expand("decoupler_workflow/w_kd_plots_mod/{component}/{kd}_{cell}_supplemental_figure3.pdf", zip, kd=KD,cell=CELL_LINE, component=COMPONENTS),
         expand("decoupler_workflow/kd_agnostic_results/{component}/{cell}/decoupler_subset_results.rds", cell=set(CELL_LINE), component=COMPONENTS),
         expand("decoupler_workflow/mod_kd_agnostic_results/{component}/{cell}/decoupler_subset_results.rds", cell=set(CELL_LINE), component=COMPONENTS),
-        expand("decoupler_workflow/wo_kd_plots/{component}/{cell}_supplemental_figure2.pdf",cell=set(CELL_LINE), component=COMPONENTS),
-        expand("decoupler_workflow/wo_kd_plots_mod/{component}/{cell}_supplemental_figure2.pdf",cell=set(CELL_LINE), component=COMPONENTS),
-        expand("decoupler_workflow/wo_kd_plots/{component}/{cell}_supplemental_figure3.pdf",cell=set(CELL_LINE), component=COMPONENTS),
-        expand("decoupler_workflow/wo_kd_plots_mod/{component}/{cell}_supplemental_figure3.pdf",cell=set(CELL_LINE), component=COMPONENTS),
-        expand("decoupler_workflow/w_kd_plots_sign_mod/{component}/{kd}_{cell}_supplemental_figure2.pdf", zip, kd=KD,cell=CELL_LINE, component=COMPONENTS),
-        expand("decoupler_workflow/w_kd_plots_sign_mod/{component}/{kd}_{cell}_supplemental_figure3.pdf", zip, kd=KD,cell=CELL_LINE, component=COMPONENTS),
-        expand("decoupler_workflow/wo_kd_plots_sign_mod/{component}/{cell}_supplemental_figure2.pdf",cell=set(CELL_LINE), component=COMPONENTS),
-        expand("decoupler_workflow/wo_kd_plots_sign_mod/{component}/{cell}_supplemental_figure3.pdf",cell=set(CELL_LINE), component=COMPONENTS)
-
+        #expand("decoupler_workflow/wo_kd_plots/{component}/{cell}_supplemental_figure2.pdf",cell=set(CELL_LINE), component=COMPONENTS),
+        #expand("decoupler_workflow/wo_kd_plots_mod/{component}/{cell}_supplemental_figure2.pdf",cell=set(CELL_LINE), component=COMPONENTS),
+        #expand("decoupler_workflow/wo_kd_plots/{component}/{cell}_supplemental_figure3.pdf",cell=set(CELL_LINE), component=COMPONENTS),
+        #expand("decoupler_workflow/wo_kd_plots_mod/{component}/{cell}_supplemental_figure3.pdf",cell=set(CELL_LINE), component=COMPONENTS),
+        #expand("decoupler_workflow/w_kd_plots_sign_mod/{component}/{kd}_{cell}_supplemental_figure2.pdf", zip, kd=KD,cell=CELL_LINE, component=COMPONENTS),
+        #expand("decoupler_workflow/w_kd_plots_sign_mod/{component}/{kd}_{cell}_supplemental_figure3.pdf", zip, kd=KD,cell=CELL_LINE, component=COMPONENTS),
+        #expand("decoupler_workflow/wo_kd_plots_sign_mod/{component}/{cell}_supplemental_figure2.pdf",cell=set(CELL_LINE), component=COMPONENTS),
+        #expand("decoupler_workflow/wo_kd_plots_sign_mod/{component}/{cell}_supplemental_figure3.pdf",cell=set(CELL_LINE), component=COMPONENTS),
+        expand("decoupler_workflow/out_files/{component}_{cell}_wo_kd_results.tsv",cell=set(CELL_LINE), component=COMPONENTS),
+        expand("decoupler_workflow/out_files/{component}_{kd}_{cell}_w_kd_results.tsv", zip, kd=KD,cell=CELL_LINE, component=COMPONENTS),
+        expand("decoupler_workflow/mod_out_files/{component}_{cell}_wo_kd_results.tsv",cell=set(CELL_LINE), component=COMPONENTS),
+        expand("decoupler_workflow/mod_out_files/{component}_{kd}_{cell}_w_kd_results.tsv", zip, kd=KD,cell=CELL_LINE, component=COMPONENTS),
+        expand("decoupler_workflow/sign_mod_out_files/{component}_{cell}_wo_kd_results.tsv",cell=set(CELL_LINE), component=COMPONENTS),
+        expand("decoupler_workflow/sign_mod_out_files/{component}_{kd}_{cell}_w_kd_results.tsv", zip, kd=KD,cell=CELL_LINE, component=COMPONENTS)
 
 include: "rules/validation.smk"

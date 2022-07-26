@@ -329,3 +329,106 @@ rule generate_supple_fig_3_wo_kd_sign_mod:
         Rscript ./scripts/generate_box_and_scatter.R {input.results} {output.fig} {output.csv_out}
         """
 
+#####
+
+rule generate_results_w_kd:
+    input:
+        results = "decoupler_workflow/results/{component}/{kd}/{cell}/decoupler_subset_results.rds"
+    output:
+        res_file = "decoupler_workflow/out_files/{component}_{kd}_{cell}_w_kd_results.tsv",
+        auc_file = "decoupler_workflow/out_files/{component}_{kd}_{cell}_w_kd_summary_results.tsv"
+    params:
+        component = lambda wildcards: "{}".format(wildcards.component)
+    singularity:
+        "library://jestabrook/regulon_enrichment/decoupler_env_slot_access"
+    shell:
+        """
+        mkdir -p decoupler_workflow/out_files
+        Rscript ./scripts/generate_kd_results.R {input.results} {output.res_file} {output.auc_file}
+        """
+
+rule generate_results_wo_kd:
+    input:
+        results = "decoupler_workflow/kd_agnostic_results/{component}/{cell}/decoupler_subset_results.rds"
+    output:
+        res_file = "decoupler_workflow/out_files/{component}_{cell}_wo_kd_results.tsv",
+        auc_file = "decoupler_workflow/out_files/{component}_{cell}_wo_kd_summary_results.tsv"
+    params:
+        component = lambda wildcards: "{}".format(wildcards.component)
+    singularity:
+        "library://jestabrook/regulon_enrichment/decoupler_env_slot_access"
+    shell:
+        """
+        mkdir -p decoupler_workflow/out_files
+        Rscript ./scripts/generate_wo_kd_results.R {input.results} {output.res_file} {output.auc_file}
+        """
+
+
+##### mod
+
+rule generate_results_w_kd_mod:
+    input:
+        results = "decoupler_workflow/mod_results/{component}/{kd}/{cell}/decoupler_subset_results.rds"
+    output:
+        res_file = "decoupler_workflow/mod_out_files/{component}_{kd}_{cell}_w_kd_results.tsv",
+        auc_file = "decoupler_workflow/mod_out_files/{component}_{kd}_{cell}_w_kd_summary_results.tsv"
+    params:
+        component = lambda wildcards: "{}".format(wildcards.component)
+    singularity:
+        "library://jestabrook/regulon_enrichment/decoupler_env_slot_access"
+    shell:
+        """
+        mkdir -p decoupler_workflow/mod_out_files
+        Rscript ./scripts/generate_kd_results.R {input.results} {output.res_file} {output.auc_file}
+        """
+
+rule generate_results_wo_kd_mod:
+    input:
+        results = "decoupler_workflow/mod_kd_agnostic_results/{component}/{cell}/decoupler_subset_results.rds"
+    output:
+        res_file = "decoupler_workflow/mod_out_files/{component}_{cell}_wo_kd_results.tsv",
+        auc_file = "decoupler_workflow/mod_out_files/{component}_{cell}_wo_kd_summary_results.tsv"
+    params:
+        component = lambda wildcards: "{}".format(wildcards.component)
+    singularity:
+        "library://jestabrook/regulon_enrichment/decoupler_env_slot_access"
+    shell:
+        """
+        mkdir -p decoupler_workflow/mod_out_files
+        Rscript ./scripts/generate_wo_kd_results.R {input.results} {output.res_file} {output.auc_file}
+        """
+
+
+##### mod with sign
+
+rule generate_results_w_kd_mod_sign:
+    input:
+        results = "decoupler_workflow/sign_mod_results/{component}/{kd}/{cell}/decoupler_subset_results.rds"
+    output:
+        res_file = "decoupler_workflow/sign_mod_out_files/{component}_{kd}_{cell}_w_kd_results.tsv",
+        auc_file = "decoupler_workflow/sign_mod_out_files/{component}_{kd}_{cell}_w_kd_summary_results.tsv"
+    params:
+        component = lambda wildcards: "{}".format(wildcards.component)
+    singularity:
+        "library://jestabrook/regulon_enrichment/decoupler_env_slot_access"
+    shell:
+        """
+        mkdir -p decoupler_workflow/sign_mod_out_files
+        Rscript ./scripts/generate_kd_results.R {input.results} {output.res_file} {output.auc_file}
+        """
+
+rule generate_results_wo_kd_mod_sign:
+    input:
+        results = "decoupler_workflow/sign_mod_kd_agnostic_results/{component}/{cell}/decoupler_subset_results.rds"
+    output:
+        res_file = "decoupler_workflow/sign_mod_out_files/{component}_{cell}_wo_kd_results.tsv",
+        auc_file = "decoupler_workflow/sign_mod_out_files/{component}_{cell}_wo_kd_summary_results.tsv"
+    params:
+        component = lambda wildcards: "{}".format(wildcards.component)
+    singularity:
+        "library://jestabrook/regulon_enrichment/decoupler_env_slot_access"
+    shell:
+        """
+        mkdir -p decoupler_workflow/sign_mod_out_files
+        Rscript ./scripts/generate_wo_kd_results.R {input.results} {output.res_file} {output.auc_file}
+        """
