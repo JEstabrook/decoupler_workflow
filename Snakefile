@@ -5,12 +5,12 @@ import os
 from itertools import compress
 from enricher.enrich import *
 
-#meta = pd.read_table('./input_data/KnockTF_GEO_working_partial_update_meta_w_sign.csv',index_col=0,sep=',')
-meta = pd.read_table('./input_data/Updated_meta_expanded.tsv',index_col=0)
+meta = pd.read_table('./input_data/KnockTF_joined_meta_GEO_ko_efficiency.tsv',index_col=0)
 meta['cell'] = meta['cell'].str.replace('(','')
 meta['cell'] = meta['cell'].str.replace(')','')
 meta['cell'] = meta['cell'].str.replace('/','_')
-meta = meta[meta.cell.isin(meta['cell'].value_counts()[meta['cell'].value_counts() >24].index.tolist())]
+#meta = meta[meta.cell.isin(meta['cell'].value_counts()[meta['cell'].value_counts() >24].index.tolist())]
+meta = meta[meta['pct_ko'] > .25]
 subset_kd = ['siRNA','shRNA','Drug']
 meta = meta[meta.knockdown_method.isin(subset_kd)]
 
@@ -67,6 +67,7 @@ rule all:
         expand("decoupler_workflow/mod_out_files/{component}_{cell}_wo_kd_results.tsv",cell=set(CELL_LINE), component=COMPONENTS),
         expand("decoupler_workflow/mod_out_files/{component}_{kd}_{cell}_w_kd_results.tsv", zip, kd=KD,cell=CELL_LINE, component=COMPONENTS),
         expand("decoupler_workflow/sign_mod_out_files/{component}_{cell}_wo_kd_results.tsv",cell=set(CELL_LINE), component=COMPONENTS),
-        expand("decoupler_workflow/sign_mod_out_files/{component}_{kd}_{cell}_w_kd_results.tsv", zip, kd=KD,cell=CELL_LINE, component=COMPONENTS)
+        expand("decoupler_workflow/sign_mod_out_files/{component}_{kd}_{cell}_w_kd_results.tsv", zip, kd=KD,cell=CELL_LINE, component=COMPONENTS),
+        expand("decoupler_workflow/sign_mod_kd_agnostic_results/{component}/{cell}/decoupler_priori_weights.tsv", zip, cell=CELL_LINE, component=COMPONENTS)
 
 include: "rules/validation.smk"

@@ -100,13 +100,14 @@ rule decoupler_w_kd_mod_sign:
         temp_expr=temp("decoupler_workflow/sign_mod_results/{component}/{kd}/{cell}/decoupler_subset_expr.rds"),
         temp_meta=temp("decoupler_workflow/sign_mod_results/{component}/{kd}/{cell}/decoupler_subset_meta.rds"),
         temp_netw=temp("decoupler_workflow/sign_mod_results/{component}/{kd}/{cell}/decoupler_subset_network.rds"),
-        results_out="decoupler_workflow/sign_mod_results/{component}/{kd}/{cell}/decoupler_subset_results.rds"
+        results_out="decoupler_workflow/sign_mod_results/{component}/{kd}/{cell}/decoupler_subset_results.rds",
+        enr_weights="decoupler_workflow/sign_mod_results/{component}/{kd}/{cell}/decoupler_priori_weights.tsv"
     singularity:
         "library://jestabrook/regulon_enrichment/decoupler_env_slot_access"
     shell:
         """
         mkdir -p decoupler_workflow/sign_mod_results/{params.component}/{params.kd}/{params.cell}
-        Rscript ./scripts/run_decoupler_kd_analysis_sign_curves.R {input.expr} {input.meta} {input.network} {params.kd} {params.cell} {output.results_out} {output.temp_expr} {output.temp_meta} {output.temp_netw} {params.component}
+        Rscript ./scripts/run_decoupler_kd_analysis_sign_curves.R {input.expr} {input.meta} {input.network} {params.kd} {params.cell} {output.results_out} {output.temp_expr} {output.temp_meta} {output.temp_netw} {params.component} {output.enr_weights}
         """
 
 rule decoupler_wo_kd_mod_sign:
@@ -121,13 +122,14 @@ rule decoupler_wo_kd_mod_sign:
         temp_expr=temp("decoupler_workflow/sign_mod_kd_agnostic_results/{component}/{cell}/decoupler_subset_expr.rds"),
         temp_meta=temp("decoupler_workflow/sign_mod_kd_agnostic_results/{component}/{cell}/decoupler_subset_meta.rds"),
         temp_netw=temp("decoupler_workflow/sign_mod_kd_agnostic_results/{component}/{cell}/decoupler_subset_network.rds"),
-        results_out="decoupler_workflow/sign_mod_kd_agnostic_results/{component}/{cell}/decoupler_subset_results.rds"
+        results_out="decoupler_workflow/sign_mod_kd_agnostic_results/{component}/{cell}/decoupler_subset_results.rds",
+        enr_weights="decoupler_workflow/sign_mod_kd_agnostic_results/{component}/{cell}/decoupler_priori_weights.tsv"
     singularity:
         "library://jestabrook/regulon_enrichment/decoupler_env_slot_access"
     shell:
         """
         mkdir -p decoupler_workflow/sign_mod_kd_agnostic_results/{params.cell}
-        Rscript ./scripts/run_decoupler_wo_kd_analysis_sign_curves.R {input.expr} {input.meta} {input.network} {params.cell} {output.results_out} {output.temp_expr} {output.temp_meta} {output.temp_netw} {params.component}
+        Rscript ./scripts/run_decoupler_wo_kd_analysis_sign_curves.R {input.expr} {input.meta} {input.network} {params.cell} {output.results_out} {output.temp_expr} {output.temp_meta} {output.temp_netw} {params.component} {output.enr_weights}
         """
 
 ##
