@@ -14,7 +14,7 @@ rule decoupler_w_kd:
         temp_netw=temp("decoupler_workflow/results/{component}/{kd}/{cell}/decoupler_subset_network.rds"),
         results_out="decoupler_workflow/results/{component}/{kd}/{cell}/decoupler_subset_results.rds" 
     singularity:
-        "library://jestabrook/regulon_enrichment/decoupler_env_slot_access"
+        "library://jestabrook/regulon_enrichment/decoupler_env_slot_access_v2"
     shell:
         """
         mkdir -p decoupler_workflow/results/{params.component}/{params.kd}/{params.cell}
