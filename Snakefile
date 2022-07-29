@@ -68,6 +68,7 @@ rule all:
         expand("decoupler_workflow/mod_out_files/{component}_{kd}_{cell}_w_kd_results.tsv", zip, kd=KD,cell=CELL_LINE, component=COMPONENTS),
         expand("decoupler_workflow/sign_mod_out_files/{component}_{cell}_wo_kd_results.tsv",cell=set(CELL_LINE), component=COMPONENTS),
         expand("decoupler_workflow/sign_mod_out_files/{component}_{kd}_{cell}_w_kd_results.tsv", zip, kd=KD,cell=CELL_LINE, component=COMPONENTS),
+        expand("decoupler_workflow/sign_mod_results/{component}/{kd}/{cell}/decoupler_priori_weights.tsv", zip, cell=CELL_LINE, kd=KD, component=COMPONENTS),
         expand("decoupler_workflow/sign_mod_kd_agnostic_results/{component}/{cell}/decoupler_priori_weights.tsv", zip, cell=CELL_LINE, component=COMPONENTS)
 
 include: "rules/validation.smk"
