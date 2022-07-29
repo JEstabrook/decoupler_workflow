@@ -5,7 +5,7 @@ import os
 from itertools import compress
 from enricher.enrich import *
 
-meta = pd.read_table('./input_data/KnockTF_joined_meta_GEO_ko_efficiency.tsv',index_col=0)
+meta = pd.read_table('./input_data/KnockTF_GEO_w_ko_expanded_meta.tsv',index_col=0)
 meta['cell'] = meta['cell'].str.replace('(','')
 meta['cell'] = meta['cell'].str.replace(')','')
 meta['cell'] = meta['cell'].str.replace('/','_')
