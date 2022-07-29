@@ -22,12 +22,13 @@ temp_expr = args[7]
 temp_meta = args[8]
 temp_netw = args[9]
 enrich_slot = args[10]
+enr_weights = args[11]
 
 expr <- readRDS(expr_fname)
 meta <- readRDS(meta_fname)
 network <- readRDS(netw_fname)
 
-regulators<-c("ACTL6A","AHR","AR","ARNT","ATF2","ATF3","ATG5","ATM","ATR","BACH1","BRCA1","BRD4","CDX2","CHEK1","CREB1","EGR3","ELK1","EP300","EPAS1","EREG","ESR1","ESR2","ESRRA","ETS1","ETS2","ETV4","FOXA1","FOXM1","FOXO1","FOXO3","FOXP1","GATA2","GATA3","GATA6","GLI2","GTF3A","HES1","HIF1A","HMGA1","HNF1B","HOXA5","HSF1","HSF2","IRF2","IRF7","JUN","KLF4","LEF1","MAF","MITF","MSX1","MTF1","MYB","MYBL2","MYC","MYCN","NANOG","NFATC3","NFE2L2","NFKB1","NFKB2","NFYA","NFYC","NR2F2","NR3C1","PAX2","PAX3","PGR","PITX2","POSTN","POU5F1","PROX1","PTEN","RELA","RELB","REST","RUNX1","RUNX2","SF1","SMAD2","SMAD3","SMAD4","SNAI1","SOX2","SOX9","SP3","STAT1","STAT3","STAT5A","STAT6","TCF4","TCF7L1","TFAP2C","TFAP4","THRA","THRB","TP53","TP63","TWIST1","TYK2","XBP1","YY1","ZEB1","ZIC2")
+regulators <- c("STAT5A","BACH1", "PCBP1", "NR4A1", "FOXM1", "RCOR1", "GATA1","NFE2L1","MAZ", "HMGA1", "HDAC8", "STAT2", "E2F4","NFE2L2","POLR2G","SMARCA4","AGO1","KAT2B", "SMAD5", "NR2F2", "MITF","LMNA","TRIM28","E2F6","ATF3","MAFG","USF2","CEBPZ","CITED2","CTBP1", "NRF1","TBL1XR1","AGO2","GTF2F1","RELA","MAX", "NFYB","TFDP1", "JUND","STAT6", "STAT1", "SP1","NFATC1","SRF", "SNW1","ERF", "GATA2", "NFYA","BRCA1","HSF1","SRSF3")
 
 sub_meta_ <- meta[(meta$knockdown_method == eval(knock_down)) & (meta$cell == eval(celltype)) & (meta$target %in% regulators),]
 
@@ -81,7 +82,7 @@ opts_list <- list(list(
   gsva = list(verbose = FALSE, method = "gsva"),
   ora = list(n_up=300, n_bottom=300, n_background=20000, with_ties = TRUE),
   fgsea = list(times=100, nproc=nproc, seed=seed),
-  enricher = list(scaler_type="robust", minsize=5,enr_type=enrich_slot)
+  enricher = list(scaler_type="robust", minsize=5,enr_type=enrich_slot, enr_weights=enr_weights)
 ))
 
 # Design

@@ -5,7 +5,8 @@ import os
 from itertools import compress
 from enricher.enrich import *
 
-meta = pd.read_table('./input_data/Updated_knocktf_meta_with_components.tsv',index_col=0)
+meta = pd.read_table('./input_data/KnockTF_Encode_w_ko_expanded_meta.tsv',index_col=0)
+meta = meta[meta['pct_ko'] > .25]
 
 TARGET = meta.target.tolist()
 CELL_LINE = meta.cell.tolist()
@@ -55,5 +56,8 @@ rule all:
         expand("decoupler_workflow/w_kd_plots_sign_mod/{component}/{kd}_{cell}_supplemental_figure3.pdf", zip, kd=KD,cell=CELL_LINE, component=COMPONENTS),
         expand("decoupler_workflow/wo_kd_plots_sign_mod/{component}/{cell}_supplemental_figure2.pdf",cell=set(CELL_LINE), component=COMPONENTS),
         expand("decoupler_workflow/wo_kd_plots_sign_mod/{component}/{cell}_supplemental_figure3.pdf",cell=set(CELL_LINE), component=COMPONENTS),
+        expand("decoupler_workflow/sign_mod_kd_agnostic_results/{component}/{cell}/decoupler_priori_weights.tsv", zip, cell=CELL_LINE, component=COMPONENTS),
+        expand("decoupler_workflow/sign_mod_results/{component}/{kd}/{cell}/decoupler_priori_weights.tsv", zip, cell=CELL_LINE, component=COMPONENTS, kd=KD)
+
 
 include: "rules/validation.smk"
