@@ -14,7 +14,7 @@ rule decoupler_w_kd:
         temp_netw=temp("decoupler_workflow/results/{component}/{kd}/{cell}/decoupler_subset_network.rds"),
         results_out="decoupler_workflow/results/{component}/{kd}/{cell}/decoupler_subset_results.rds" 
     singularity:
-        "library://jestabrook/regulon_enrichment/decoupler_env_slot_access"
+        "library://jestabrook/regulon_enrichment/decoupler_env_slot_access_v2"
     shell:
         """
         mkdir -p decoupler_workflow/results/{params.component}/{params.kd}/{params.cell}
@@ -35,7 +35,7 @@ rule decoupler_wo_kd:
         temp_netw=temp("decoupler_workflow/kd_agnostic_results/{component}/{cell}/decoupler_subset_network.rds"),
         results_out="decoupler_workflow/kd_agnostic_results/{component}/{cell}/decoupler_subset_results.rds"
     singularity:
-        "library://jestabrook/regulon_enrichment/decoupler_env_slot_access"
+        "library://jestabrook/regulon_enrichment/decoupler_env_slot_access_v2"
     shell:
         """
         mkdir -p decoupler_workflow/kd_agnostic_results/{params.cell}
@@ -60,7 +60,7 @@ rule decoupler_w_kd_mod_sign:
         results_out="decoupler_workflow/sign_mod_results/{component}/{kd}/{cell}/decoupler_subset_results.rds",
         enr_weights="decoupler_workflow/sign_mod_results/{component}/{kd}/{cell}/decoupler_priori_weights.tsv"
     singularity:
-        "library://jestabrook/regulon_enrichment/decoupler_env_slot_access"
+        "library://jestabrook/regulon_enrichment/decoupler_env_slot_access_v2"
     shell:
         """
         mkdir -p decoupler_workflow/sign_mod_results/{params.component}/{params.kd}/{params.cell}
@@ -82,7 +82,7 @@ rule decoupler_wo_kd_mod_sign:
         results_out="decoupler_workflow/sign_mod_kd_agnostic_results/{component}/{cell}/decoupler_subset_results.rds",
         enr_weight="decoupler_workflow/sign_mod_kd_agnostic_results/{component}/{cell}/decoupler_priori_weights.tsv",
     singularity:
-        "library://jestabrook/regulon_enrichment/decoupler_env_slot_access"
+        "library://jestabrook/regulon_enrichment/decoupler_env_slot_access_v2"
     shell:
         """
         mkdir -p decoupler_workflow/sign_mod_kd_agnostic_results/{params.cell}
@@ -99,7 +99,7 @@ rule generate_supple_fig_2_w_kd:
     params:
         component = lambda wildcards: "{}".format(wildcards.component)
     singularity:
-        "library://jestabrook/regulon_enrichment/decoupler_env_slot_access"
+        "library://jestabrook/regulon_enrichment/decoupler_env_slot_access_v2"
     shell:
         """
         mkdir -p decoupler_workflow/w_kd_plots/{params.component}
@@ -114,7 +114,7 @@ rule generate_supple_fig_2_wo_kd:
     params:
         component = lambda wildcards: "{}".format(wildcards.component)
     singularity:
-        "library://jestabrook/regulon_enrichment/decoupler_env_slot_access"
+        "library://jestabrook/regulon_enrichment/decoupler_env_slot_access_v2"
     shell:
         """
         mkdir -p decoupler_workflow/wo_kd_plots/{params.component}
@@ -130,7 +130,7 @@ rule generate_supple_fig_3_w_kd:
     params:
         component = lambda wildcards: "{}".format(wildcards.component)
     singularity:
-        "library://jestabrook/regulon_enrichment/decoupler_env_slot_access"
+        "library://jestabrook/regulon_enrichment/decoupler_env_slot_access_v2"
     shell:
         """
         mkdir -p decoupler_workflow/w_kd_plots/{params.component}
@@ -146,7 +146,7 @@ rule generate_supple_fig_3_wo_kd:
     params:
         component = lambda wildcards: "{}".format(wildcards.component)
     singularity:
-        "library://jestabrook/regulon_enrichment/decoupler_env_slot_access"
+        "library://jestabrook/regulon_enrichment/decoupler_env_slot_access_v2"
     shell:
         """
         mkdir -p decoupler_workflow/wo_kd_plots/{params.component}
@@ -164,7 +164,7 @@ rule generate_results_w_kd:
     params:
         component = lambda wildcards: "{}".format(wildcards.component)
     singularity:
-        "library://jestabrook/regulon_enrichment/decoupler_env_slot_access"
+        "library://jestabrook/regulon_enrichment/decoupler_env_slot_access_v2"
     shell:
         """
         mkdir -p decoupler_workflow/out_files
@@ -180,7 +180,7 @@ rule generate_results_wo_kd:
     params:
         component = lambda wildcards: "{}".format(wildcards.component)
     singularity:
-        "library://jestabrook/regulon_enrichment/decoupler_env_slot_access"
+        "library://jestabrook/regulon_enrichment/decoupler_env_slot_access_v2"
     shell:
         """
         mkdir -p decoupler_workflow/out_files
@@ -197,7 +197,7 @@ rule generate_supple_fig_2_w_kd_sign_mod:
     params:
         component = lambda wildcards: "{}".format(wildcards.component)
     singularity:
-        "library://jestabrook/regulon_enrichment/decoupler_env_slot_access"
+        "library://jestabrook/regulon_enrichment/decoupler_env_slot_access_v2"
     shell:
         """
         mkdir -p decoupler_workflow/w_kd_plots_sign_mod/{params.component}
@@ -212,7 +212,7 @@ rule generate_supple_fig_2_wo_kd_sign_mod:
     params:
         component = lambda wildcards: "{}".format(wildcards.component)
     singularity:
-        "library://jestabrook/regulon_enrichment/decoupler_env_slot_access"
+        "library://jestabrook/regulon_enrichment/decoupler_env_slot_access_v2"
     shell:
         """
         mkdir -p decoupler_workflow/wo_kd_plots_sign_mod/{params.component}
@@ -227,7 +227,7 @@ rule generate_supple_fig_3_w_kd_sign_mod:
     params:
         component = lambda wildcards: "{}".format(wildcards.component)
     singularity:
-        "library://jestabrook/regulon_enrichment/decoupler_env_slot_access"
+        "library://jestabrook/regulon_enrichment/decoupler_env_slot_access_v2"
     shell:
         """
         mkdir -p decoupler_workflow/w_kd_plots_sign_mod/{params.component}
@@ -243,7 +243,7 @@ rule generate_supple_fig_3_wo_kd_sign_mod:
     params:
         component = lambda wildcards: "{}".format(wildcards.component)
     singularity:
-        "library://jestabrook/regulon_enrichment/decoupler_env_slot_access"
+        "library://jestabrook/regulon_enrichment/decoupler_env_slot_access_v2"
     shell:
         """
         mkdir -p decoupler_workflow/wo_kd_plots_sign_mod/{params.component}
@@ -261,7 +261,7 @@ rule generate_results_w_kd_mod_sign:
     params:
         component = lambda wildcards: "{}".format(wildcards.component)
     singularity:
-        "library://jestabrook/regulon_enrichment/decoupler_env_slot_access"
+        "library://jestabrook/regulon_enrichment/decoupler_env_slot_access_v2"
     shell:
         """
         mkdir -p decoupler_workflow/sign_mod_out_files
@@ -277,7 +277,7 @@ rule generate_results_wo_kd_mod_sign:
     params:
         component = lambda wildcards: "{}".format(wildcards.component)
     singularity:
-        "library://jestabrook/regulon_enrichment/decoupler_env_slot_access"
+        "library://jestabrook/regulon_enrichment/decoupler_env_slot_access_v2"
     shell:
         """
         mkdir -p decoupler_workflow/sign_mod_out_files
