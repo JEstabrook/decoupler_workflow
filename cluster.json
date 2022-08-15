@@ -1,14 +1,14 @@
 {
     "__default__" :
     {
-        "t" : "6:00:00",
+        "t" : "36:00:00",
         "N" : 1,
         "partition" : "exacloud",
         "J" : "{rule}",
         "o" : "logs/__default__/{rule}_%j.out",
         "e" : "logs/__default__/{rule}_%j.err",
-        "c" : 1,
-        "mem" : 16000
+        "c" : 4,
+        "mem" : 50000
     },
     "decoupler_w_kd" :
     {
@@ -24,7 +24,7 @@
         "J" : "decoupler_wo_kd",
         "e" : "logs/{rule}/{wildcards.cell}_%j.err",
         "o" : "logs/{rule}/{wildcards.cell}_%j.out",
-        "c" : 1,
+        "c" : 4,
         "t" : "36:00:00",
         "mem" : 50000
     },
