@@ -10,7 +10,7 @@ rule decoupler_expr:
         results_out="decoupler_workflow/results/{component}/decoupler_subset_results.rds",
         enr_weights="decoupler_workflow/results/{component}/decoupler_priori_weights.tsv"
     singularity:
-        "library://yasharw/priori/decoupler_env_no_delta_force_regulon_network"
+        "library://yasharw/priori/decoupler_env_no_delta"
     shell:
         """
         mkdir -p decoupler_workflow/results/{params.component}
@@ -26,7 +26,7 @@ rule generate_results_expr:
     params:
         component = lambda wildcards: "{}".format(wildcards.component)
     singularity:
-        "library://yasharw/priori/decoupler_env_no_delta_force_regulon_network"
+        "library://yasharw/priori/decoupler_env_no_delta"
     shell:
         """
         mkdir -p decoupler_workflow/out_files
