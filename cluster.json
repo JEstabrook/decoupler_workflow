@@ -18,59 +18,5 @@
         "c" : 4,
         "t" : "36:00:00",
         "mem" : 50000
-    },
-    "generate_supple_fig_2" :
-    {
-        "J" : "generate_supple_fig_2",
-        "e" : "logs/{rule}/{wildcards.component}_%j.err",
-        "o" : "logs/{rule}/{wildcards.component}_%j.out",
-        "c" : 1,
-        "t" : "36:00:00",
-        "mem" : 5000
-    },
-    "generate_supple_fig_3" :
-    {
-        "J" : "generate_supple_fig_3",
-        "e" : "logs/{rule}/{wildcards.component}_%j.err",
-        "o" : "logs/{rule}/{wildcards.component}_%j.out",
-        "c" : 1,
-        "t" : "36:00:00",
-        "mem" : 5000
-    },
-    "run_rna_gaussian_noise" :
-    {
-        "J" : "run_rna_noise",
-        "e" : "logs/{rule}/{wildcards.component}_%j.err",
-        "o" : "logs/{rule}/{wildcards.component}_%j.out",
-        "c" : 1,
-        "t" : "36:00:00",
-        "mem" : 50000
-    },
-    "run_random_edges" :
-    {
-        "J" : "run_rna_noise",
-        "e" : "logs/{rule}/{wildcards.component}_%j.err",
-        "o" : "logs/{rule}/{wildcards.component}_%j.out",
-        "c" : 1,
-        "t" : "36:00:00",
-        "mem" : 50000
-    },
-    "run_shuffle_edges" :
-    {
-        "J" : "run_rna_noise",
-        "e" : "logs/{rule}/{wildcards.component}_%j.err",
-        "o" : "logs/{rule}/{wildcards.component}_%j.out",
-        "c" : 1,
-        "t" : "36:00:00",
-        "mem" : 50000
-    },
-    "run_prune_edges" :
-    {
-        "J" : "run_rna_noise",
-        "e" : "logs/{rule}/{wildcards.component}_%j.err",
-        "o" : "logs/{rule}/{wildcards.component}_%j.out",
-        "c" : 1,
-        "t" : "36:00:00",
-        "mem" : 50000
     }
 }
