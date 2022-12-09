@@ -1,67 +1,76 @@
 {
     "__default__" :
     {
-        "t" : "6:00:00",
+        "t" : "36:00:00",
         "N" : 1,
         "partition" : "exacloud",
         "J" : "{rule}",
         "o" : "logs/__default__/{rule}_%j.out",
         "e" : "logs/__default__/{rule}_%j.err",
         "c" : 1,
-        "mem" : 16000
+        "mem" : 50000
     },
-    "decoupler_w_kd" :
+    "decoupler_expr" :
     {
-        "J" : "decoupler_w_kd",
-        "e" : "logs/{rule}/{wildcards.kd}_{wildcards.cell}_%j.err",
-        "o" : "logs/{rule}/{wildcards.kd}_{wildcards.cell}_%j.out",
+        "J" : "decoupler_expr",
+        "e" : "logs/{rule}/{wildcards.component}_%j.err",
+        "o" : "logs/{rule}/{wildcards.component}_%j.out",
         "c" : 4,
         "t" : "36:00:00",
         "mem" : 50000
     },
-    "decoupler_wo_kd" :
+    "generate_supple_fig_2" :
     {
-        "J" : "decoupler_wo_kd",
-        "e" : "logs/{rule}/{wildcards.cell}_%j.err",
-        "o" : "logs/{rule}/{wildcards.cell}_%j.out",
+        "J" : "generate_supple_fig_2",
+        "e" : "logs/{rule}/{wildcards.component}_%j.err",
+        "o" : "logs/{rule}/{wildcards.component}_%j.out",
+        "c" : 1,
+        "t" : "36:00:00",
+        "mem" : 5000
+    },
+    "generate_supple_fig_3" :
+    {
+        "J" : "generate_supple_fig_3",
+        "e" : "logs/{rule}/{wildcards.component}_%j.err",
+        "o" : "logs/{rule}/{wildcards.component}_%j.out",
+        "c" : 1,
+        "t" : "36:00:00",
+        "mem" : 5000
+    },
+    "run_rna_gaussian_noise" :
+    {
+        "J" : "run_rna_noise",
+        "e" : "logs/{rule}/{wildcards.component}_%j.err",
+        "o" : "logs/{rule}/{wildcards.component}_%j.out",
         "c" : 1,
         "t" : "36:00:00",
         "mem" : 50000
     },
-    "generate_supple_fig_2_w_kd" :
+    "run_random_edges" :
     {
-        "J" : "generate_supple_fig_2_w_kd",
-        "e" : "logs/{rule}/{wildcards.kd}_{wildcards.cell}_%j.err",
-        "o" : "logs/{rule}/{wildcards.kd}_{wildcards.cell}_%j.out",
+        "J" : "run_rna_noise",
+        "e" : "logs/{rule}/{wildcards.component}_%j.err",
+        "o" : "logs/{rule}/{wildcards.component}_%j.out",
         "c" : 1,
-        "t" : "6:00:00",
-        "mem" : 5000
+        "t" : "36:00:00",
+        "mem" : 50000
     },
-    "generate_supple_fig_2_wo_kd" :
+    "run_shuffle_edges" :
     {
-        "J" : "generate_supple_fig_2_wo_kd",
-        "e" : "logs/{rule}/{wildcards.cell}_%j.err",
-        "o" : "logs/{rule}/{wildcards.cell}_%j.out",
+        "J" : "run_rna_noise",
+        "e" : "logs/{rule}/{wildcards.component}_%j.err",
+        "o" : "logs/{rule}/{wildcards.component}_%j.out",
         "c" : 1,
-        "t" : "6:00:00",
-        "mem" : 5000
+        "t" : "36:00:00",
+        "mem" : 50000
     },
-    "generate_supple_fig_3_w_kd" :
+    "run_prune_edges" :
     {
-        "J" : "generate_supple_fig_3_w_kd",
-        "e" : "logs/{rule}/{wildcards.kd}_{wildcards.cell}_%j.err",
-        "o" : "logs/{rule}/{wildcards.kd}_{wildcards.cell}_%j.out",
+        "J" : "run_rna_noise",
+        "e" : "logs/{rule}/{wildcards.component}_%j.err",
+        "o" : "logs/{rule}/{wildcards.component}_%j.out",
         "c" : 1,
-        "t" : "6:00:00",
-        "mem" : 5000
-    },
-    "generate_supple_fig_3_wo_kd" :
-    {
-        "J" : "generate_supple_fig_3_wo_kd",
-        "e" : "logs/{rule}/{wildcards.cell}_%j.err",
-        "o" : "logs/{rule}/{wildcards.cell}_%j.out",
-        "c" : 1,
-        "t" : "6:00:00",
-        "mem" : 5000
+        "t" : "36:00:00",
+        "mem" : 50000
     }
 }
