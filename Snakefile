@@ -25,6 +25,7 @@ rule all:
         # Main pipeline
         expand(["decoupler_workflow/results/{component}/decoupler_subset_results.rds", 
             "decoupler_workflow/out_files/{component}_results.tsv", 
+            "decoupler_workflow/out_files/{component}_summary_results.tsv", 
             "decoupler_workflow/results/{component}/decoupler_priori_weights.tsv",
             ], component=COMPONENTS)
 
